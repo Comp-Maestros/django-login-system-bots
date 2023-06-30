@@ -3,27 +3,12 @@
 {% block title %}Login/Register{% endblock %}
 
 {% block content %}
-<div class="wrapper">
-    <div class="card-switch">
-        <label class="switch">
-           <input type="checkbox" class="toggle">
-           <span class="slider"></span>
-           <span class="card-side"></span>
-           <div class="flip-card__inner">
-                <div class="flip-card__back">
-               <div class="title">Sign up</div>
-               <form method="POST" class="flip-card__form" action="">
-                  {% csrf_token %}
-                  <input class="flip-card__input" placeholder="Name" type="name">
-                  <input class="flip-card__input" name="email" placeholder="Email" type="email">
-                  <input class="flip-card__input" name="password" placeholder="Password" type="password">
-                  <button class="flip-card__btn">Register</button>
-               </form>
-            </div>
-         {% endif %}
-           </div>
-        </label>
-    </div>   
+<div class="continer">
+   <form action="" method="POST" >
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="btn btn-primary">Register</button>
+   </form>
 </div>
 
 {% endblock %}
