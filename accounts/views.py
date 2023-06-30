@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.shortcuts import render,redirect
 from django.contrib.auth import login,authenticate,logout
 from django.contrib import messages
-from .forms import CustomUserCreationForm
 from .models import CustomUser
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
@@ -10,25 +9,33 @@ from django.contrib.auth.forms import AuthenticationForm
 
 # Create your views here where i want to declare my pages register and login where if the user has an account he can login and if he doesn't have an account he can register i want to have html page named login-register.html
 def Register(request):
-    page='register'
-    if request.user.is_authenticated:
-        return redirect('core:home')
-    if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            user=form.save(commit=False)
-            user.username=user.username.lower()
-            user.save()
-            messages.success(request,'User account created')
-            login(request,user)
-            return redirect('core:home')
-        else:
-            messages.error(request,'An error has occured during registration')
-            
-    else:
-        form = CustomUserCreationForm()
-
-    return render(request,'accounts/login-register.html',{'form':form,'page':page})
+        page='register'
+        #get the fields from the html page
+        if request.method == 'POST':
+            first_name=request.POST['first_name']
+            last_name=request.POST['last_name']
+            email=request.POST['email'].lower()
+            password=request.POST['password']
+            password2=request.POST['password2']
+            #check if the passwords match
+            if password == password2:
+                #check if the email exists
+                if CustomUser.objects.filter(email=email).exists():
+                    messages.error(request,'Email already exists')
+                else:
+                    #create the user
+                    user=CustomUser.objects.create_user(email=email,password=password,first_name=first_name,last_name=last_name)
+                    user.save()
+                    messages.success(request,'You are now registered')
+                    return redirect('accounts:login')
+            else:
+                messages.error(request,'Passwords do not match')
+                
+            context={    
+                'page':page
+            }
+                
+        return render(request,'accounts/login-register.html',   context )
 
 def login_user(request):
     page='login'
