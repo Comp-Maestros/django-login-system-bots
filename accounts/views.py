@@ -9,7 +9,7 @@ from django.contrib.auth.forms import AuthenticationForm
 
 
 # Create your views here where i want to declare my pages register and login where if the user has an account he can login and if he doesn't have an account he can register i want to have html page named login-register.html
-def register(request):
+def Register(request):
     page='register'
     if request.user.is_authenticated:
         return redirect('home')

@@ -1,12 +1,11 @@
 #add path
 from django.urls import path
-#import views.py
-from . import views
+from .views import Register,login_user,logout_user
 
-#app name should be accounts
-app_name = 'accounts'
+app_name='accounts'
 
-#path for register page
 urlpatterns = [
-    path('register/',views.register,name='register'),
+    path('register/',Register,name='register'),
+    path('login/',login_user,name='login'),
+    path('logout/',logout_user,name='logout'),
 ]
