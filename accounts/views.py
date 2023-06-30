@@ -18,19 +18,25 @@ def Register(request):
         form = CustomUserCreationForm()
     return render(request,'accounts/register.html',{'form':form})
 
+#login
 def Login(request):
     if request.method == 'POST':
-        email = request.POST['email']
-        password = request.POST['password']
-        user = authenticate(email=email,password=password)
-        if user:
-            login(request,user)
-            messages.success(request,'Login successfully')
-            return redirect('accounts:login')
-        else:
-            messages.error(request,'Invalid email or password')
-            return redirect('accounts:login')
-    return render(request,'accounts/login.html')
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            email = request.POST['email']
+            password = request.POST['password']
+            
+            user = authenticate(email=email,password=password)
+            if user:
+                login(request,user)
+                messages.success(request,'Login successfully')
+                return redirect('core:home')
+            else:
+                messages.error(request,'Invalid email or password')
+                return redirect('accounts:login')
+    else:
+        form = LoginForm()
+    return render(request,'accounts/login.html',{'form':form})
 
 def Logout(request):
     logout(request)
