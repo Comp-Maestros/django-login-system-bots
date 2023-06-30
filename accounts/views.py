@@ -12,7 +12,7 @@ from django.contrib.auth.forms import AuthenticationForm
 def Register(request):
     page='register'
     if request.user.is_authenticated:
-        return redirect('home')
+        return redirect('core:home')
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
@@ -21,7 +21,7 @@ def Register(request):
             user.save()
             messages.success(request,'User account created')
             login(request,user)
-            return redirect('home')
+            return redirect('core:home')
         else:
             messages.error(request,'An error has occured during registration')
             
@@ -33,7 +33,7 @@ def Register(request):
 def login_user(request):
     page='login'
     if request.user.is_authenticated:
-        return redirect('home')
+        return redirect('core:home')
     if request.method == 'POST':
         form = AuthenticationForm(request,data=request.POST)
         if form.is_valid():
@@ -43,7 +43,7 @@ def login_user(request):
             if user is not None:
                 login(request,user)
                 messages.success(request,'You are logged in')
-                return redirect('home')
+                return redirect('core:home')
             else:
                 messages.error(request,'Invalid credentials')
         else:
@@ -57,7 +57,7 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     messages.success(request,'You are logged out')
-    return redirect('home')
+    return redirect('core:home')
 
 
 
