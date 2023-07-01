@@ -41,7 +41,6 @@ INSTALLED_APPS = [
         #app installations
     'accounts',
     'core',
-    'ussd',
 ]
 
 MIDDLEWARE = [
