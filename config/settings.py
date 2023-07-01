@@ -108,8 +108,8 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 #about login decorators to be used redirecting to login page
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'accounts:login'
+LOGOUT_REDIRECT_URL = 'accounts:login'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
